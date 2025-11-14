@@ -1,2 +1,113 @@
-# HCMUT-TUTORING
-Hệ thống phần mềm để quản lý và vận hành chương trình Tutor một cách hiệu quả, hiện đại và có khả năng mở rộng, đáp ứng nhu cầu thực tiễn trong môi trường giáo dục đại học, sử dụng backend Django và database MongoDB
+# CNPM-PROJECT
+
+HCMUT-TUTORING
+
+---
+
+## 📝 Giới thiệu
+
+Hệ thống sử dụng **Django** cho phần backend và **MongoDB** làm cơ sở dữ liệu NoSQL
+
+---
+
+## ✨ Tính năng chính
+
+- **Xác thực người dùng:** Đăng ký, đăng nhập, đăng xuất.
+- **Quản lý Sản phẩm/Bài viết:** Thêm, xóa, sửa, xem chi tiết các mục.
+- **Giao diện RESTful API:** Cung cấp API để các ứng dụng khác có thể tương tác.
+
+---
+
+## 🛠️ Công nghệ sử dụng
+
+- **Backend:** [Django](https://www.djangoproject.com/)
+- **Cơ sở dữ liệu:** [MongoDB](https://www.mongodb.com/)
+- **Thư viện kết nối DB:** [PyMongo](https://pymongo.readthedocs.io/en/stable/) (nếu kết nối thủ công) hoặc [Djongo](https://github.com/doctormo/djongo) (nếu tích hợp qua models)
+- **Ngôn ngữ:** Python 3.x
+- **Frontend:** HTML, CSS, JavaScript
+
+---
+
+HCMUTTUTORING-PROJECT/
+│
+├── backend/
+│   ├── config/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py     # Định nghĩa đường dẫn URL toàn cục 
+│   │   ├── wsgi.py     # Cấu hình WSGI
+│   │   ├── asgi.py     # Cấu hình ASGI
+│   │
+│   ├── apps/
+│   │   ├── __init__.py
+│   │   ├── login/
+│   │   │   ├── __init__.py
+│   │   │   ├── apps.py
+│   │   │   ├── urls.py
+│   │   │   ├── views.py
+│   │   │   ├── serializers.py
+│   │   │   ├── services.py
+│   │   │   ├── validators.py
+│   │   │   ├── models.py
+│   │   ├── home/
+│   │   │   ├── __init__.py
+│   │   │   ├── apps.py
+│   │   │   ├── urls.py
+│   │   │   ├── views.py
+│   │   │   ├── serializers.py
+│   │   │   ├── services.py
+│   │   │   ├── models.py
+│   │   ├── forgetpassword/
+│   │       ├── __init__.py
+│   │       ├── apps.py
+│   │       ├── urls.py
+│   │       ├── views.py
+│   │       ├── serializers.py
+│   │       ├── services.py
+│   │
+│   ├── manage.py            # Script quản lý của Django
+│   ├── requirements.txt     # Danh sách thư viện
+│   └── .env
+│   └── README.md
+├── frontend/
+│   └── ...
+
+## 🚀 Cài đặt và Chạy dự án
+
+# Windows
+```bash
+# 1️⃣ Tạo môi trường ảo
+python -m venv venv
+
+# 2️⃣ Kích hoạt môi trường ảo
+.\venv\Scripts\activate
+
+# 3️⃣ Khởi động dịch vụ MongoDB
+net start MongoDB
+
+# 4️⃣ Cài đặt các gói phụ thuộc
+pip install -r requirements.txt
+
+# 5️⃣ Chạy server Django
+python manage.py runserver
+```
+
+# macOS/Linux
+```bash
+# 1️⃣ Tạo môi trường ảo
+python3 -m venv venv
+
+# 2️⃣ Kích hoạt môi trường ảo
+source venv/bin/activate
+
+# 3️⃣ Khởi động MongoDB (qua Homebrew)
+brew services start mongodb-community@6.0
+
+# 4️⃣ Cài đặt các gói phụ thuộc
+pip install -r requirements.txt
+
+# 5️⃣ Chạy server Django
+python3 manage.py runserver
+
+```
+
