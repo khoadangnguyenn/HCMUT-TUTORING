@@ -60,7 +60,22 @@ class LoginSerializer(serializers.Serializer):
         return attrs
 
 
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = [
+#             "id",
+#             "email",
+#             "full_name",
+#             "role",
+#             "avatar_url",
+#             "bio",
+#             "last_login",
+#         ]
+#         read_only_fields = ["id", "email", "last_login"]
+
 class UserSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True) 
     class Meta:
         model = User
         fields = [
@@ -72,8 +87,8 @@ class UserSerializer(serializers.ModelSerializer):
             "bio",
             "last_login",
         ]
-        read_only_fields = ["id", "email", "last_login"]
-
+        
+        read_only_fields = ["email", "last_login"]
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
     class Meta:

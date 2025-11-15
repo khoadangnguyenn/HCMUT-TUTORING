@@ -66,7 +66,6 @@ HCMUTTUTORING-PROJECT/
 │   │       ├── services.py
 │   │
 │   ├── manage.py            # Script quản lý của Django
-│   ├── requirements.txt     # Danh sách thư viện
 │   └── .env
 │   └── README.md
 ├── frontend/

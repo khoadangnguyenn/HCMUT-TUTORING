@@ -15,4 +15,5 @@ urlpatterns = [
     path("signup/", TemplateView.as_view(template_name="signup/signup.html"), name="signup"),
     path("signup_success/", TemplateView.as_view(template_name="signup_success/signup_success.html"), name="signup_success"),
     path("forgetpassword/", TemplateView.as_view(template_name="forgetpassword/forgetpassword.html"), name="forgetpassword"),
+    path("api/password-reset/", include("apps.forgetpassword.urls")),
 ]

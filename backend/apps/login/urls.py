@@ -9,6 +9,7 @@ from .views import (
     SessionActivityView,
     SessionView,
     SignupView,
+    PasswordChangeView,
 )
 
 app_name = "login"
@@ -21,5 +22,6 @@ urlpatterns = [
     path("session/", SessionView.as_view(), name="session"),
     path("profile/", ProfileView.as_view(), name="profile"),
     path("activity/", SessionActivityView.as_view(), name="activity"),
+    path("password/change/", PasswordChangeView.as_view(), name="password-change"),
     path("logout/", LogoutView.as_view(), name="logout"),
 ]
