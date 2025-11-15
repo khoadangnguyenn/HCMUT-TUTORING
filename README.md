@@ -34,6 +34,8 @@ HCMUTTUTORING-PROJECT/
 │   ├── config/
 │   │   ├── __init__.py
 │   │   ├── settings.py
+│   │   ├── reset_db.py # Reset data MongoDB
+│   │   ├── apps.py     # Override ObjectAutoFieldID
 │   │   ├── urls.py     # Định nghĩa đường dẫn URL toàn cục 
 │   │   ├── wsgi.py     # Cấu hình WSGI
 │   │   ├── asgi.py     # Cấu hình ASGI
@@ -66,7 +68,6 @@ HCMUTTUTORING-PROJECT/
 │   │       ├── services.py
 │   │
 │   ├── manage.py            # Script quản lý của Django
-│   ├── requirements.txt     # Danh sách thư viện
 │   └── .env
 │   └── README.md
 ├── frontend/
@@ -88,6 +89,10 @@ net start MongoDB
 # 4️⃣ Cài đặt các gói phụ thuộc
 pip install -r requirements.txt
 
+#Tạo & chạy migration
+python manage.py makemigrations
+python manage.py migrate
+
 # 5️⃣ Chạy server Django
 python manage.py runserver
 ```
@@ -105,6 +110,10 @@ brew services start mongodb-community@6.0
 
 # 4️⃣ Cài đặt các gói phụ thuộc
 pip install -r requirements.txt
+
+#Tạo & chạy migration
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 # 5️⃣ Chạy server Django
 python3 manage.py runserver

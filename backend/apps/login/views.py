@@ -14,6 +14,7 @@ from .serializers import (
     SignupSerializer,
     UpdateProfileSerializer,
     UserSerializer,
+    PasswordChangeSerializer
 )
 from .services import login_user
 
@@ -226,3 +227,27 @@ class SessionActivityView(SessionUserMixin, APIView):
         serializer = SessionActivitySerializer(queryset, many=True)
         return Response(serializer.data)
 
+class PasswordChangeView(SessionUserMixin, APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        user, error = self.require_authentication(request)
+        if error:
+            return error
+        
+        serializer = PasswordChangeSerializer(
+            data=request.data, 
+            context={'request': request}
+        )
+        
+        serializer.context['request'].user = user
+
+        serializer.is_valid(raise_exception=True)
+
+        user.set_password(serializer.validated_data["new_password"])
+        user.save(update_fields=["password"])
+
+        return Response(
+            {"message": "Đổi mật khẩu thành công."},
+            status=status.HTTP_200_OK
+        )
