@@ -1,5 +1,7 @@
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from apps.home.views import HomeTemplateView
 
@@ -15,3 +17,6 @@ urlpatterns = [
     path("forgetpassword/", TemplateView.as_view(template_name="forgetpassword/forgetpassword.html"), name="forgetpassword"),
     path("api/password-reset/", include(("apps.forgetpassword.urls", "forgetpassword"), namespace="password-reset")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

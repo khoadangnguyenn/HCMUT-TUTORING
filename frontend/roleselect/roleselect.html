@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -5,13 +6,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đăng nhập với vai trò</title>
-  <link href="roleselect.css" rel="stylesheet" />
+  <link href="{% static 'roleselect/roleselect.css' %}" rel="stylesheet" />
 </head>
 
 <body>
   <div class="container">
     <h2>ĐĂNG NHẬP VỚI VAI TRÒ</h2>
-    <a href="login-sinhvien.html" class="role-button">Sinh viên</a>
+    <a href="{% url 'login' %}" class="role-button">Sinh viên</a>
     <a href="login-tutor.html" class="role-button">Tutor</a>
     <a href="login-quanly.html" class="role-button">Ban quản lý</a>
   </div>

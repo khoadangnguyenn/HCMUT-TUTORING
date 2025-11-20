@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,20 +6,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | HCMUT Tutoring System</title>
-  <link rel="stylesheet" href="homestyle.css">
+  <link rel="stylesheet" href="{% static 'home/homestyle.css' %}">
 </head>
 
 <body>
 
   <!-- Navbar -->
   <header>
-    <div class="logo"><img src="resources/bk-logo.png" alt="logo"></div>
+    <div class="logo"><img src="{% static 'home/resources/bk-logo.png' %}" alt="logo"></div>
     <div class="nav-links">
       <a href="#">Categories</a>
       <div class="search-bar"><input type="text" placeholder="Search courses"></div>
       <a href="#">Teach on Byway</a>
       <div class="nav-buttons">
-        <button class="login">Log In</button>
+        {% if request.user.is_authenticated %}
+          <div class="user-info"> 
+            <img src="{{ request.user.avatar }}" alt="avatar" style="width:40px;height:40px;border-radius:50%;margin-right:8px;">
+            <span>{{ request.user.first_name }}</span>
+          </div>
+        {% else %}
+          {% url 'login' as login_url %}
+          {% url 'signup' as signup_url %}
+          <button class="login" onclick="window.location.href='{{ login_url }}'">Log In</button>
+          <button class="signup" onclick="window.location.href='{{ signup_url }}'">Sign Up</button>
+        {% endif %}
       </div>
     </div>
   </header>
@@ -37,22 +48,22 @@
 
     <div class="hero-visual">
       <div class="circle circle1">
-        <img src="resources/student.png" alt="Graduate Student">
+        <img src="{% static 'home/resources/student.png' %}" alt="Graduate Student">
       </div>
       <div class="circle circle2">
-        <img src="resources/student-2.png" alt="Smiling Student">
+        <img src="{% static 'home/resources/student-2.png' %}" alt="Smiling Student">
       </div>
       <div class="circle circle3">
-        <img src="resources/student-3.png" alt="Student with Backpack">
+        <img src="{% static 'home/resources/student-3.png' %}" alt="Student with Backpack">
       </div>
 
       <div class="community-card">
         <div class="community-imgs">
-          <img src="resources/1.png" alt="Community" class="community-img">
-          <img src="resources/2.png" alt="Community" class="community-img">
-          <img src="resources/3.png" alt="Community" class="community-img">
-          <img src="resources/4.png" alt="Community" class="community-img">
-          <img src="resources/5.png" alt="Community" class="community-img">
+          <img src="{% static 'home/resources/1.png' %}" alt="Community" class="community-img">
+          <img src="{% static 'home/resources/2.png' %}" alt="Community" class="community-img">
+          <img src="{% static 'home/resources/3.png' %}" alt="Community" class="community-img">
+          <img src="{% static 'home/resources/4.png' %}" alt="Community" class="community-img">
+          <img src="{% static 'home/resources/5.png' %}" alt="Community" class="community-img">
         </div>
         <div>
           <p><strong>Join our community</strong><br>of 1200+ Students</p>
@@ -90,28 +101,28 @@
     <div class="categories">
       <div class="category-card">
         <div class="img-bg">
-          <img src="resources/vat-ly.png">
+          <img src="{% static 'home/resources/vat-ly.png' %}">
         </div>
         <h3>Vật Lý 1</h3>
         <p>11 Courses</p>
       </div>
       <div class="category-card">
         <div class="img-bg">
-          <img src="resources/ky-thuat.png">
+          <img src="{% static 'home/resources/ky-thuat.png' %}">
         </div>
         <h3>Nhập môn Kỹ thuật</h3>
         <p>12 Courses</p>
       </div>
       <div class="category-card">
         <div class="img-bg">
-          <img src="resources/giai-tich.png">
+          <img src="{% static 'home/resources/giai-tich.png' %}">
         </div>
         <h3>Giải tích</h3>
         <p>12 Courses</p>
       </div>
       <div class="category-card">
         <div class="img-bg">
-          <img src="resources/hoa.png">
+          <img src="{% static 'home/resources/hoa.png' %}">
         </div>
         <h3>Hóa đại cương</h3>
         <p>14 Courses</p>
@@ -127,7 +138,19 @@
     </div>
     <div class="courses">
       <div class="course-card">
-        <img src="resources/course.jpg">
+        <img src="{% static 'home/resources/course.jpg' %}">
+        <div class="course-info">
+          <h3 class="course-title">Beginner's Guide to Design</h3>
+          <p class="course-author">By Ronald Richards</p>
+          <div class="course-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-count"><strong>(1200 Ratings)</strong></span>
+          </div>
+          <p class="course-details">22 Total Hours. 155 Lectures. Beginner</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="{% static 'home/resources/course.jpg' %}">
         <div class="course-info">
           <h3 class="course-title">Beginner’s Guide to Design</h3>
           <p class="course-author">By Ronald Richards</p>
@@ -139,19 +162,7 @@
         </div>
       </div>
       <div class="course-card">
-        <img src="resources/course.jpg">
-        <div class="course-info">
-          <h3 class="course-title">Beginner’s Guide to Design</h3>
-          <p class="course-author">By Ronald Richards</p>
-          <div class="course-rating">
-            <span class="stars">★★★★★</span>
-            <span class="rating-count"><strong>(1200 Ratings)</strong></span>
-          </div>
-          <p class="course-details">22 Total Hours. 155 Lectures. Beginner</p>
-        </div>
-      </div>
-      <div class="course-card">
-        <img src="resources/course.jpg">
+        <img src="{% static 'home/resources/course.jpg' %}">
         <div class="course-info">
           <h3 class="course-title">Beginner’s Guide to Design</h3>
           <p class="course-author">By Ronald Richards</p>
