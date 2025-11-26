@@ -26,9 +26,7 @@
           </div>
         {% else %}
           {% url 'login' as login_url %}
-          {% url 'signup' as signup_url %}
           <button class="login" onclick="window.location.href='{{ login_url }}'">Log In</button>
-          <button class="signup" onclick="window.location.href='{{ signup_url }}'">Sign Up</button>
         {% endif %}
       </div>
     </div>

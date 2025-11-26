@@ -43,6 +43,7 @@ header {
     width: 250px;
 }
 
+
 .nav-buttons button {
     padding: 8px 16px;
     border: none;
@@ -52,11 +53,6 @@ header {
 }
 
 .login {
-    background-color: transparent;
-    color: #fff;
-}
-
-.signup {
     background-color: #e44;
     color: #fff;
 }
