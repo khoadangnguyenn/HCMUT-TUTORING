@@ -77,45 +77,51 @@ HCMUTTUTORING-PROJECT/
 
 # Windows
 ```bash
-# 1️⃣ Tạo môi trường ảo
+# Tạo môi trường ảo
 python -m venv venv
 
-# 2️⃣ Kích hoạt môi trường ảo
+# Kích hoạt môi trường ảo
 .\venv\Scripts\activate
 
-# 3️⃣ Khởi động dịch vụ MongoDB
+# Khởi động dịch vụ MongoDB
 net start MongoDB
 
-# 4️⃣ Cài đặt các gói phụ thuộc
+# Cài đặt các gói phụ thuộc
 pip install -r requirements.txt
 
 #Tạo & chạy migration
 python manage.py makemigrations
 python manage.py migrate
 
-# 5️⃣ Chạy server Django
+# Tạo account để test
+python manage.py seed_users
+
+# Chạy server Django
 python manage.py runserver
 ```
 
 # macOS/Linux
 ```bash
-# 1️⃣ Tạo môi trường ảo
+# Tạo môi trường ảo
 python3 -m venv venv
 
-# 2️⃣ Kích hoạt môi trường ảo
+# Kích hoạt môi trường ảo
 source venv/bin/activate
 
-# 3️⃣ Khởi động MongoDB (qua Homebrew)
+# Khởi động MongoDB (qua Homebrew)
 brew services start mongodb-community@6.0
 
-# 4️⃣ Cài đặt các gói phụ thuộc
-pip install -r requirements.txt
+# Cài đặt các gói phụ thuộc
+pip3 install -r requirements.txt
 
-#Tạo & chạy migration
+# Tạo & chạy migration
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-# 5️⃣ Chạy server Django
+# Tạo account để test
+python3 manage.py seed_users
+
+# Chạy server Django
 python3 manage.py runserver
 
 ```
