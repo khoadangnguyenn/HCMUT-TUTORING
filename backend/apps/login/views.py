@@ -66,8 +66,8 @@ class LoginAPI(APIView):
 
         redirect_map = {
             "student": "/home",
-            "tutor": "/tutor/dashboard",
-            "admin": "/admin/dashboard",
+            "tutor": "/home",
+            "admin": "/home",
         }
 
         return Response(

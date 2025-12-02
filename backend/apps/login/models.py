@@ -1,6 +1,7 @@
 from django.contrib.auth.hashers import check_password, make_password
 from django.db import models
 from django.utils import timezone
+from django.templatetags.static import static
 
 
 class UserRole(models.TextChoices):
@@ -37,6 +38,17 @@ class User(models.Model):
     def register_login(self) -> None:
         self.last_login = timezone.now()
         self.save(update_fields=["last_login"])
+
+    def get_avatar_url(self) -> str:
+        """Get avatar URL, with fallback based on role"""
+        if self.avatar_url:
+            return self.avatar_url
+        avatar_map = {
+            'student': static('home/resources/student-avatar.jpg'),
+            'tutor': static('home/resources/tutor-avatar.jpg'),
+            'manager': static('home/resources/manager-avatar.jpg'),
+        }
+        return avatar_map.get(self.role, static('home/resources/student-avatar.jpg'))
 
     def to_public_dict(self) -> dict:
         return {

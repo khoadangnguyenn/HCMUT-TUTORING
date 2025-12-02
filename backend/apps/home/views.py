@@ -28,6 +28,19 @@ from .services import (
 )
 
 
+def get_avatar_url_by_role(role):
+    """
+    Get avatar URL based on user role.
+    Maps role to corresponding avatar file in home/resources/
+    """
+    avatar_map = {
+        'student': '/static/home/resources/student-avatar.jpg',
+        'tutor': '/static/home/resources/tutor-avatar.jpg',
+        'manager': '/static/home/resources/manager-avatar.jpg',
+    }
+    return avatar_map.get(role, '/static/home/resources/student-avatar.png')
+
+
 def seed_home_content():
     if not HeroContent.objects.exists():
         HeroContent.objects.create(
@@ -204,5 +217,11 @@ class HomeTemplateView(TemplateView):
         context["instructors"] = InstructorProfile.objects.filter(is_featured=True)[:3]
         context["testimonials"] = Testimonial.objects.filter(is_featured=True)[:2]
         context["session_user"] = self.request.session.get("full_name")
+        
+        # Get avatar URL based on user role from session
+        user_role = self.request.session.get('role', 'student')
+        context["avatar_url"] = get_avatar_url_by_role(user_role)
+        context["user_role"] = user_role
+        
         return context
 
