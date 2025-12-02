@@ -63,12 +63,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
         "NAME": MONGO_NAME,
-        "CLIENT": (
-            {"host": MONGO_URL} if MONGO_URL else {
-                "host": os.getenv("MONGO_HOST", "localhost"),
-                "port": int(os.getenv("MONGO_PORT", "27017")),
-            }
-        ),
+        'HOST': os.environ.get("MONGO_URL"),
     }
 }
 
