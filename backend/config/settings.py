@@ -56,16 +56,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
 # Database
-MONGO_URL = os.getenv("MONGO_URL")
-MONGO_NAME = os.getenv("MONGO_NAME", "hcmut_tutoring_db")
+MONGO_URI = os.getenv("MONGO_URI")
+MONGO_NAME = os.getenv("MONGO_NAME", "hcmut_tutoring")
 
 # For MongoDB Atlas, ensure MONGO_URL includes retryWrites and authSource parameters
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_backend',
-        'NAME': 'yourdb',
+        'NAME':  MONGO_NAME,
         'CLIENT': {
-            'host': os.getenv("MONGO_URI"),
+            'host': MONGO_URI,
             'tls': True,
             'tlsAllowInvalidCertificates': True,
         }
