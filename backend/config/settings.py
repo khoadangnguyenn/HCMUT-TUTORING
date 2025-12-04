@@ -62,7 +62,7 @@ ASGI_APPLICATION = "config.asgi.application"
 # Database
 MONGO_URL = os.getenv("MONGO_URL")
 MONGO_NAME = os.getenv("MONGO_NAME", "hcmut_tutoring_db")
-
+print("MONGO_URL is:", os.getenv('MONGO_URL', 'Đang dùng mặc định localhost'))
 DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
