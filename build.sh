@@ -3,7 +3,7 @@ set -e
 
 echo "Installing dependencies..."
 pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 
 echo "Running Django migrations..."
 cd backend
