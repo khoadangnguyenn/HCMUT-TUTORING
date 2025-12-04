@@ -12,10 +12,59 @@
 <body>
   <div class="container">
     <h2>ĐĂNG NHẬP VỚI VAI TRÒ</h2>
-    <a href="{% url 'login' %}" class="role-button">Sinh viên</a>
-    <a href="login-tutor.html" class="role-button">Tutor</a>
-    <a href="login-quanly.html" class="role-button">Ban quản lý</a>
+    <a href="#" class="role-button" data-role="student">Sinh viên</a>
+    <a href="#" class="role-button" data-role="tutor">Tutor</a>
+    <a href="#" class="role-button" data-role="admin">Ban quản lý</a>
   </div>
+  <script>
+    // Read CSRF token from cookie (standard Django name)
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    document.querySelectorAll('.role-button').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const role = btn.getAttribute('data-role');
+        try {
+          const res = await fetch('/api/roles/choose/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ role }),
+            credentials: 'same-origin'
+          });
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            alert(err.detail || 'Không thể chọn vai trò');
+            return;
+          }
+          // Store the selected role in sessionStorage so login page can use it
+          sessionStorage.setItem('login_role', role);
+          // On success, redirect to the login page
+          window.location.href = '{% url "login" %}';
+        } catch (error) {
+          console.error(error);
+          alert('Lỗi mạng. Vui lòng thử lại.');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

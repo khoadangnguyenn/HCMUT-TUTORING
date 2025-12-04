@@ -39,6 +39,74 @@
       <img src="{% static 'login/login.png' %}" alt="Login Illustration">
     </div>
   </div>
+
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    document.querySelector('.login-btn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const rememberMe = document.querySelector('input[type="checkbox"]').checked;
+
+      // Get the role from sessionStorage (set by roleselect page)
+      const sessionRole = sessionStorage.getItem('login_role') || 'student';
+
+      if (!email || !password) {
+        alert('Vui lòng điền đầy đủ email và mật khẩu');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/auth/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+          },
+          body: JSON.stringify({
+            email,
+            password,
+            role: sessionRole,
+            remember_me: rememberMe,
+          }),
+          credentials: 'same-origin'
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || 'Đăng nhập thất bại');
+          return;
+        }
+
+        // Success: redirect to the redirect_to URL from response
+        if (data.redirect_to) {
+          window.location.href = data.redirect_to;
+        } else {
+          window.location.href = '/';
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Lỗi mạng. Vui lòng thử lại.');
+      }
+    });
+  </script>
 </body>
 
 </html>

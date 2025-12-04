@@ -19,14 +19,20 @@
       <div class="search-bar"><input type="text" placeholder="Search courses"></div>
       <a href="#">Teach on Byway</a>
       <div class="nav-buttons">
-        {% if request.user.is_authenticated %}
-          <div class="user-info"> 
-            <img src="{{ request.user.avatar }}" alt="avatar" style="width:40px;height:40px;border-radius:50%;margin-right:8px;">
-            <span>{{ request.user.first_name }}</span>
+        {% if request.session.user_id %}
+          <div class="user-menu">
+            <div class="user-info" onclick="toggleUserMenu()"> 
+              <img src="{{ avatar_url }}" alt="avatar" style="width:40px;height:40px;border-radius:50%;margin-right:8px;cursor:pointer;">
+              <span>{{ request.session.full_name }}</span>
+              <span style="margin-left: 8px; cursor:pointer;">▼</span>
+            </div>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="logout()">Sign Out</a>
+            </div>
           </div>
         {% else %}
-          {% url 'login' as login_url %}
-          <button class="login" onclick="window.location.href='{{ login_url }}'">Log In</button>
+          {% url 'roleselect' as roleselect_url %}
+          <button class="login" onclick="window.location.href='{{ roleselect_url }}'">Log In</button>
         {% endif %}
       </div>
     </div>
@@ -39,7 +45,8 @@
       <p>Kết nối với những tutor giỏi tại HCMUT, được ghép đôi theo nhu cầu cá nhân và phát triển kỹ năng học tập của
         bạn</p>
       <div class="buttons">
-        <button class="btn-primary">BẮT ĐẦU NGAY</button>
+        {% url 'login' as login_url %}
+        <button class="btn-primary" onclick="window.location.href='{{ login_url }}'">BẮT ĐẦU NGAY</button>
         <button class="btn-secondary">TÌM HIỂU THÊM</button>
       </div>
     </div>
@@ -222,7 +229,7 @@
       <h3>Become an Instructor</h3>
       <p>Instructors from around the world teach millions of students on Byway. We provide tools and skills to teach
         what you love.</p>
-      <button>Start Your Instructor Journey →</button>
+      <button onclick="window.location.href='{{ login_url }}'">Start Your Instructor Journey →</button>
     </div>
   </section>
 
@@ -230,7 +237,8 @@
     <div class="text">
       <h3>Transform your life through Education</h3>
       <p>Learners around the world are launching new careers, advancing in their fields, and enriching their lives.</p>
-      <button>Checkout Courses →</button>
+      
+      <button onclick="window.location.href='{{ login_url }}'">Checkout Courses →</button>
     </div>
     <img src="https://cdn-icons-png.flaticon.com/512/4140/4140050.png">
   </section>
@@ -262,6 +270,68 @@
       <a href="#">Mail: bywayedu@webkul.in</a>
     </div>
   </footer>
+
+  <script>
+    // Toggle user dropdown menu
+    function toggleUserMenu() {
+      const dropdown = document.getElementById('user-dropdown');
+      if (dropdown) {
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const userMenu = document.querySelector('.user-menu');
+      if (userMenu && !userMenu.contains(event.target)) {
+        const dropdown = document.getElementById('user-dropdown');
+        if (dropdown) {
+          dropdown.style.display = 'none';
+        }
+      }
+    });
+
+    // Sign out function
+    async function logout() {
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      const csrftoken = getCookie('csrftoken');
+
+      try {
+        const res = await fetch('/api/auth/logout/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+          },
+          credentials: 'same-origin'
+        });
+
+        if (res.ok) {
+          // Redirect to home page after logout
+          window.location.href = '/';
+        } else {
+          alert('Đăng xuất thất bại');
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        alert('Lỗi mạng. Vui lòng thử lại.');
+      }
+    }
+  </script>
 
 </body>
 
