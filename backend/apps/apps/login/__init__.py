@@ -1,0 +1,3 @@
+default_app_config = "apps.login.apps.LoginConfig"
+
+
