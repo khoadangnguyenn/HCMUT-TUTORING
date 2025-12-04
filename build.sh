@@ -9,6 +9,6 @@ echo "Running Django migrations..."
 cd backend
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
-
+python manage.py seed_users
 
 echo "Build completed successfully!"
