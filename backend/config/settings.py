@@ -7,7 +7,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR.parent / "frontend"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "replace-this-secret")
-DEBUG = os.getenv("DEBUG", "True") == "True"
+
+IS_RENDER = os.getenv("RENDER") is not None
+
+DEBUG = False if IS_RENDER else os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -26,6 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -63,7 +67,11 @@ DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
         "NAME": MONGO_NAME,
-        'HOST': os.environ.get("MONGO_URL"),
+        'HOST': MONGO_URL,
+         "OPTIONS": {
+            "retryWrites": True,
+            "w": "majority",
+        },
     }
 }
 
@@ -77,6 +85,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [FRONTEND_DIR]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 
